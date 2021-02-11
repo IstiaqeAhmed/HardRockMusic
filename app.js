@@ -30,11 +30,16 @@ const displaySongs = songs => {
       })
 }
 
-const getLyric = (artist, title) => {
+
+const getLyric = async(artist, title) => {
     const url = `https://api.lyrics.ovh/v1/${artist}/${title}`;
-    fetch(url)
-    .then(res => res.json())
-    .then(data => displayLyrics(data.lyrics))
+    try {
+        const res = await fetch(url)
+        const data= await res.json()
+        displayLyrics(data.lyrics)
+    } catch (error) {
+        displayError('Sorry! I failed to load. Please try again letter!');
+    }
 }
 
 const displayLyrics = lyrics => {
